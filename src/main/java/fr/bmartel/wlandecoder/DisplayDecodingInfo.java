@@ -35,6 +35,8 @@ import fr.bmartel.protocol.wlan.frame.management.inter.IibssAnnoucementIndicatio
 import fr.bmartel.protocol.wlan.inter.IWlan802dot11Radiotap;
 import fr.bmartel.protocol.wlan.inter.IWlanControlFrame;
 import fr.bmartel.protocol.wlan.utils.ByteUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Display decoding info on console
@@ -44,7 +46,7 @@ import fr.bmartel.protocol.wlan.utils.ByteUtils;
  */
 public class DisplayDecodingInfo {
 
-	private final static String tab ="-------";
+	private static final Logger logger = LoggerFactory.getLogger(DisplayDecodingInfo.class);
 	
 	/**
 	 * Display all information about Wlan802dot11 frames
@@ -55,41 +57,41 @@ public class DisplayDecodingInfo {
 	{
 		for (int i = 0; i <wlanDecodedFrameList.size();i++)
 		{
-			System.out.println("Wlan frame control");
+			logger.debug("Wlan frame control");
 		
-			System.out.println(tab+"protocolVersion   : " + (wlanDecodedFrameList.get(i).getFrameControl().getProtocolVersion() & 0xFF));
-			System.out.println(tab+"type              : " + (wlanDecodedFrameList.get(i).getFrameControl().getType() & 0xFF));
-			System.out.println(tab+"subType           : " + (wlanDecodedFrameList.get(i).getFrameControl().getSubType() & 0xFF));
-			System.out.println(tab+"toDS              : " + wlanDecodedFrameList.get(i).getFrameControl().isToDS());
-			System.out.println(tab+"fromDS            : " + wlanDecodedFrameList.get(i).getFrameControl().isFromDS());
-			System.out.println(tab+"moreFragmentation : " + wlanDecodedFrameList.get(i).getFrameControl().isMoreFragmentation());
-			System.out.println(tab+"retry             : " + wlanDecodedFrameList.get(i).getFrameControl().isRetry());
-			System.out.println(tab+"powerManagement   : " + wlanDecodedFrameList.get(i).getFrameControl().isPowerManagement());
-			System.out.println(tab+"moreData          : " + wlanDecodedFrameList.get(i).getFrameControl().isMoreData());
-			System.out.println(tab+"wep               : " + wlanDecodedFrameList.get(i).getFrameControl().isWep());
-			System.out.println(tab+"order             : " + wlanDecodedFrameList.get(i).getFrameControl().isOrder());
+			logger.debug("    protocolVersion   : " + (wlanDecodedFrameList.get(i).getFrameControl().getProtocolVersion() & 0xFF));
+			logger.debug("    type              : " + (wlanDecodedFrameList.get(i).getFrameControl().getType() & 0xFF));
+			logger.debug("    subType           : " + (wlanDecodedFrameList.get(i).getFrameControl().getSubType() & 0xFF));
+			logger.debug("    toDS              : " + wlanDecodedFrameList.get(i).getFrameControl().isToDS());
+			logger.debug("    fromDS            : " + wlanDecodedFrameList.get(i).getFrameControl().isFromDS());
+			logger.debug("    moreFragmentation : " + wlanDecodedFrameList.get(i).getFrameControl().isMoreFragmentation());
+			logger.debug("    retry             : " + wlanDecodedFrameList.get(i).getFrameControl().isRetry());
+			logger.debug("    powerManagement   : " + wlanDecodedFrameList.get(i).getFrameControl().isPowerManagement());
+			logger.debug("    moreData          : " + wlanDecodedFrameList.get(i).getFrameControl().isMoreData());
+			logger.debug("    wep               : " + wlanDecodedFrameList.get(i).getFrameControl().isWep());
+			logger.debug("    order             : " + wlanDecodedFrameList.get(i).getFrameControl().isOrder());
 			
 			if (wlanDecodedFrameList.get(i).getFrame() instanceof IWlanManagementFrame)
 			{
-				System.out.println("Wlan management frame");
+				logger.debug("Wlan management frame");
 				IWlanManagementFrame managementFrame= (IWlanManagementFrame) wlanDecodedFrameList.get(i).getFrame();
 				
-				System.out.println(tab+"duration id     : "+ ByteUtils.byteArrayToStringMessage("", managementFrame.getDurationId(), '|'));
-				System.out.println(tab+"destinationAddr : "+ ByteUtils.byteArrayToStringMessage("",managementFrame.getDestinationAddr(), '|'));
-				System.out.println(tab+"sourceAddr      : "+ ByteUtils.byteArrayToStringMessage("", managementFrame.getSourceAddr(), '|'));
-				System.out.println(tab+"bssid           : "+ ByteUtils.byteArrayToStringMessage("", managementFrame.getBSSID(), '|'));
-				System.out.println(tab+"sequenceControl : "+ ByteUtils.byteArrayToStringMessage("",managementFrame.getSequenceControl(), '|'));
-				System.out.println(tab+"frameBody       : "+ ByteUtils.byteArrayToStringMessage("",managementFrame.getFrameBody(), '|'));
-				System.out.println(tab+"fcs             : "+ ByteUtils.byteArrayToStringMessage("",managementFrame.getFcs(), '|'));
+				logger.debug("    duration id     : "+ ByteUtils.byteArrayToStringMessage("", managementFrame.getDurationId(), '|'));
+				logger.debug("    destinationAddr : "+ ByteUtils.byteArrayToStringMessage("",managementFrame.getDestinationAddr(), '|'));
+				logger.debug("    sourceAddr      : "+ ByteUtils.byteArrayToStringMessage("", managementFrame.getSourceAddr(), '|'));
+				logger.debug("    bssid           : "+ ByteUtils.byteArrayToStringMessage("", managementFrame.getBSSID(), '|'));
+				logger.debug("    sequenceControl : "+ ByteUtils.byteArrayToStringMessage("",managementFrame.getSequenceControl(), '|'));
+				logger.debug("    frameBody       : "+ ByteUtils.byteArrayToStringMessage("",managementFrame.getFrameBody(), '|'));
+				logger.debug("    fcs             : "+ ByteUtils.byteArrayToStringMessage("",managementFrame.getFcs(), '|'));
 				
 				if (wlanDecodedFrameList.get(i).getFrame() instanceof IAssociationRequestFrame)
 				{
-					System.out.println(tab+"MANAGEMENT ASSOCIATION REQUEST FRAME");
+					logger.debug("    MANAGEMENT ASSOCIATION REQUEST FRAME");
 					
 					IAssociationRequestFrame associationRequestFrame =(IAssociationRequestFrame) wlanDecodedFrameList.get(i).getFrame();
 					
-					System.out.println(tab+tab+"listenInterval         : "+ ByteUtils.byteArrayToStringMessage("", associationRequestFrame.getListenInterval(),'|'));
-					System.out.println(tab+tab+"capability information : "+ ByteUtils.byteArrayToStringMessage("", associationRequestFrame.getCapabilityInfo(),'|'));
+					logger.debug("        listenInterval         : "+ ByteUtils.byteArrayToStringMessage("", associationRequestFrame.getListenInterval(),'|'));
+					logger.debug("        capability information : "+ ByteUtils.byteArrayToStringMessage("", associationRequestFrame.getCapabilityInfo(),'|'));
 
 					for (int j = 0; j< associationRequestFrame.getTaggedParameter().size(); j++) {
 						displayTaggedParameter(associationRequestFrame.getTaggedParameter().get(j));
@@ -97,13 +99,13 @@ public class DisplayDecodingInfo {
 				}
 				else if(wlanDecodedFrameList.get(i).getFrame() instanceof IAssociationResponseFrame)
 				{
-					System.out.println(tab+"MANAGEMENT ASSOCATION RESPONSE FRAME");
+					logger.debug("    MANAGEMENT ASSOCATION RESPONSE FRAME");
 					
 					IAssociationResponseFrame associationFrame =(IAssociationResponseFrame) wlanDecodedFrameList.get(i).getFrame();
 					
-					System.out.println(tab+tab+"statusCode             : " + associationFrame.getStatusCode());
-					System.out.println(tab+tab+"associationId          : "+ associationFrame.getAssociationId());
-					System.out.println(tab+tab+"capability information : "+ ByteUtils.byteArrayToStringMessage("", associationFrame.getCapabilityInfo(),'|'));
+					logger.debug("        statusCode             : " + associationFrame.getStatusCode());
+					logger.debug("        associationId          : "+ associationFrame.getAssociationId());
+					logger.debug("        capability information : "+ ByteUtils.byteArrayToStringMessage("", associationFrame.getCapabilityInfo(),'|'));
 					
 					for (int j = 0; j< associationFrame.getTaggedParameter().size(); j++) {
 						displayTaggedParameter(associationFrame.getTaggedParameter().get(j));
@@ -111,23 +113,23 @@ public class DisplayDecodingInfo {
 				}
 				else if(wlanDecodedFrameList.get(i).getFrame() instanceof IAuthenticationFrame)
 				{
-					System.out.println(tab+"MANAGEMENT AUTHENTICATION FRAME");
+					logger.debug("    MANAGEMENT AUTHENTICATION FRAME");
 					
 					IAuthenticationFrame authenticationFrame =(IAuthenticationFrame) wlanDecodedFrameList.get(i).getFrame();
 					
-					System.out.println(tab+tab+"authenticationAlgorithmNum : "+ authenticationFrame.getAuthenticationAlgorithmNum());
-					System.out.println(tab+tab+"authenticationSeqNum       : "+ authenticationFrame.getAuthenticationSeqNum());
-					System.out.println(tab+tab+"statusCode                 : " + authenticationFrame.getStatusCode());
+					logger.debug("        authenticationAlgorithmNum : "+ authenticationFrame.getAuthenticationAlgorithmNum());
+					logger.debug("        authenticationSeqNum       : "+ authenticationFrame.getAuthenticationSeqNum());
+					logger.debug("        statusCode                 : " + authenticationFrame.getStatusCode());
 				}
 				else if (wlanDecodedFrameList.get(i).getFrame() instanceof IBeaconFrame)
 				{
-					System.out.println(tab+"MANAGEMENT BEACON FRAME");
+					logger.debug("    MANAGEMENT BEACON FRAME");
 					
 					IBeaconFrame beaconFrame =(IBeaconFrame) wlanDecodedFrameList.get(i).getFrame();
 					
-					System.out.println(tab+tab+"timestamp              : "+ ByteUtils.byteArrayToStringMessage("",beaconFrame.getTimestamp(), '|'));
-					System.out.println(tab+tab+"beaconInterval         : "+ ByteUtils.convertByteArrayToInt(beaconFrame.getBeaconInterval()));
-					System.out.println(tab+tab+"capability information : "+ ByteUtils.byteArrayToStringMessage("", beaconFrame.getCapabilityInfo(),'|'));
+					logger.debug("        timestamp              : "+ ByteUtils.byteArrayToStringMessage("",beaconFrame.getTimestamp(), '|'));
+					logger.debug("        beaconInterval         : "+ ByteUtils.convertByteArrayToInt(beaconFrame.getBeaconInterval()));
+					logger.debug("        capability information : "+ ByteUtils.byteArrayToStringMessage("", beaconFrame.getCapabilityInfo(),'|'));
 					
 					for (int j = 0; j< beaconFrame.getTaggedParameter().size(); j++) {
 						displayTaggedParameter(beaconFrame.getTaggedParameter().get(j));
@@ -135,23 +137,23 @@ public class DisplayDecodingInfo {
 				}
 				else if (wlanDecodedFrameList.get(i).getFrame() instanceof IDeauthenticationFrame)
 				{
-					System.out.println(tab+"MANAGEMENT DEAUTHENTICATION FRAME");
+					logger.debug("    MANAGEMENT DEAUTHENTICATION FRAME");
 					
-					System.out.println(tab+tab+"reasonCode : " + ((IDeauthenticationFrame)wlanDecodedFrameList.get(i).getFrame()).getReasonCode());
+					logger.debug("        reasonCode : " + ((IDeauthenticationFrame)wlanDecodedFrameList.get(i).getFrame()).getReasonCode());
 				}
 				else if(wlanDecodedFrameList.get(i).getFrame() instanceof DisassociationFrame)
 				{
-					System.out.println(tab+"MANAGEMENT DISASSOCIATION FRAME");
+					logger.debug("    MANAGEMENT DISASSOCIATION FRAME");
 					
-					System.out.println(tab+tab+"statusCode : " + ((DisassociationFrame)wlanDecodedFrameList.get(i).getFrame()).getStatusCode());
+					logger.debug("        statusCode : " + ((DisassociationFrame)wlanDecodedFrameList.get(i).getFrame()).getStatusCode());
 				}
 				else if (wlanDecodedFrameList.get(i).getFrame() instanceof IibssAnnoucementIndicationMapFrame)
 				{
-					System.out.println(tab+"MANAGEMENT IBSS ANNOUCEMENT INDICATION MAP FRAME");
+					logger.debug("    MANAGEMENT IBSS ANNOUCEMENT INDICATION MAP FRAME");
 				}
 				else if (wlanDecodedFrameList.get(i).getFrame() instanceof IProbeRequestFrame)
 				{
-					System.out.println(tab+"MANAGEMENT - PROBE REQUEST FRAME");
+					logger.debug("    MANAGEMENT - PROBE REQUEST FRAME");
 					IProbeRequestFrame probeFrame =(IProbeRequestFrame) wlanDecodedFrameList.get(i).getFrame();
 					
 					for (int j = 0; j< probeFrame.getTaggedParameter().size(); j++) {
@@ -162,10 +164,10 @@ public class DisplayDecodingInfo {
 				{
 					IProbeResponseFrame probeFrame =(IProbeResponseFrame) wlanDecodedFrameList.get(i).getFrame();
 					
-					System.out.println(tab+"MANAGEMENT - PROBE RESPONSE FRAME");
-					System.out.println(tab+tab+"timestamp              : "+ ByteUtils.byteArrayToStringMessage("",probeFrame.getTimestamp(), '|'));
-					System.out.println(tab+tab+"beaconInterval         : "+ ByteUtils.convertByteArrayToInt(probeFrame.getBeaconInterval()));
-					System.out.println(tab+tab+"capability information : "+ ByteUtils.byteArrayToStringMessage("", probeFrame.getCapabilityInformation(),'|'));
+					logger.debug("    MANAGEMENT - PROBE RESPONSE FRAME");
+					logger.debug("        timestamp              : "+ ByteUtils.byteArrayToStringMessage("",probeFrame.getTimestamp(), '|'));
+					logger.debug("        beaconInterval         : "+ ByteUtils.convertByteArrayToInt(probeFrame.getBeaconInterval()));
+					logger.debug("        capability information : "+ ByteUtils.byteArrayToStringMessage("", probeFrame.getCapabilityInformation(),'|'));
 					
 					for (int j = 0; j< probeFrame.getTaggedParameter().size(); j++) {
 						displayTaggedParameter(probeFrame.getTaggedParameter().get(j));
@@ -175,11 +177,11 @@ public class DisplayDecodingInfo {
 				{
 					IReassociationRequestFrame reassociationFrame =(IReassociationRequestFrame) wlanDecodedFrameList.get(i).getFrame();
 					
-					System.out.println(tab+"MANAGEMENT REASSOCIATION FRAME");
+					logger.debug("    MANAGEMENT REASSOCIATION FRAME");
 					
-					System.out.println(tab+tab+"listenInterval         : "+ ByteUtils.byteArrayToStringMessage("", reassociationFrame.getListenInterval(),'|'));
-					System.out.println(tab+tab+"currentAPAdress        : "+ ByteUtils.convertByteArrayToInt(reassociationFrame.getCurrentAPAdress()));
-					System.out.println(tab+tab+"capability information : "+ ByteUtils.byteArrayToStringMessage("", reassociationFrame.getCapabilityInfo(),'|'));
+					logger.debug("        listenInterval         : "+ ByteUtils.byteArrayToStringMessage("", reassociationFrame.getListenInterval(),'|'));
+					logger.debug("        currentAPAdress        : "+ ByteUtils.convertByteArrayToInt(reassociationFrame.getCurrentAPAdress()));
+					logger.debug("        capability information : "+ ByteUtils.byteArrayToStringMessage("", reassociationFrame.getCapabilityInfo(),'|'));
 					
 					for (int j = 0; j< reassociationFrame.getTaggedParameter().size(); j++) {
 						displayTaggedParameter(reassociationFrame.getTaggedParameter().get(j));
@@ -189,11 +191,11 @@ public class DisplayDecodingInfo {
 				{
 					IReassociationResponseFrame reassociationFrame =(IReassociationResponseFrame) wlanDecodedFrameList.get(i).getFrame();
 					
-					System.out.println(tab+"MANAGEMENT REASSOCATION RESPONSE FRAME");
+					logger.debug("    MANAGEMENT REASSOCATION RESPONSE FRAME");
 
-					System.out.println(tab+tab+"statusCode             : " + reassociationFrame.getStatusCode());
-					System.out.println(tab+tab+"associationId          : "+ reassociationFrame.getAssociationId());
-					System.out.println(tab+tab+"capability information : "+ ByteUtils.byteArrayToStringMessage("", reassociationFrame.getCapabilityInfo(),'|'));
+					logger.debug("        statusCode             : " + reassociationFrame.getStatusCode());
+					logger.debug("        associationId          : "+ reassociationFrame.getAssociationId());
+					logger.debug("        capability information : "+ ByteUtils.byteArrayToStringMessage("", reassociationFrame.getCapabilityInfo(),'|'));
 					
 					for (int j = 0; j< reassociationFrame.getTaggedParameter().size(); j++) {
 						displayTaggedParameter(reassociationFrame.getTaggedParameter().get(j));
@@ -202,79 +204,79 @@ public class DisplayDecodingInfo {
 			}
 			if (wlanDecodedFrameList.get(i).getFrame() instanceof IWlanDataFrame)
 			{
-				System.out.println("Wlan data frame");
+				logger.debug("Wlan data frame");
 				IWlanDataFrame dataFrame= (IWlanDataFrame) wlanDecodedFrameList.get(i).getFrame();
 				
-				System.out.println(tab+"duration id     : "+ ByteUtils.byteArrayToStringMessage("", dataFrame.getDurationId(), '|'));
-				System.out.println(tab+"destinationAddr : "+ ByteUtils.byteArrayToStringMessage("",dataFrame.getDestinationAddr(), '|'));
-				System.out.println(tab+"sourceAddr      : "+ ByteUtils.byteArrayToStringMessage("", dataFrame.getSourceAddr(), '|'));
-				System.out.println(tab+"bssid           : "+ ByteUtils.byteArrayToStringMessage("", dataFrame.getBSSID(), '|'));
-				System.out.println(tab+"sequenceControl : "+ ByteUtils.byteArrayToStringMessage("",dataFrame.getSequenceControl(), '|'));
-				System.out.println(tab+"frameBody       : "+ ByteUtils.byteArrayToStringMessage("",dataFrame.getFrameBody(), '|'));
+				logger.debug("    duration id     : "+ ByteUtils.byteArrayToStringMessage("", dataFrame.getDurationId(), '|'));
+				logger.debug("    destinationAddr : "+ ByteUtils.byteArrayToStringMessage("",dataFrame.getDestinationAddr(), '|'));
+				logger.debug("    sourceAddr      : "+ ByteUtils.byteArrayToStringMessage("", dataFrame.getSourceAddr(), '|'));
+				logger.debug("    bssid           : "+ ByteUtils.byteArrayToStringMessage("", dataFrame.getBSSID(), '|'));
+				logger.debug("    sequenceControl : "+ ByteUtils.byteArrayToStringMessage("",dataFrame.getSequenceControl(), '|'));
+				logger.debug("    frameBody       : "+ ByteUtils.byteArrayToStringMessage("",dataFrame.getFrameBody(), '|'));
 				
 				if (wlanDecodedFrameList.get(i).getFrame() instanceof IDataFrame)
-					System.out.println(tab+"DATA FRAME");
+					logger.debug("    DATA FRAME");
 				else if (wlanDecodedFrameList.get(i).getFrame() instanceof INullFrame)
-					System.out.println(tab+"NULL FRAME");
+					logger.debug("    NULL FRAME");
 				else if (wlanDecodedFrameList.get(i).getFrame() instanceof IQosDataFrame)
 				{
-					System.out.println(tab+"QOS DATA FRAME");
-					System.out.println(tab+tab+"qos control : "+ ByteUtils.byteArrayToStringMessage("", ((IQosDataFrame)wlanDecodedFrameList.get(i).getFrame()).getQosControl(), '|'));
+					logger.debug("    QOS DATA FRAME");
+					logger.debug("        qos control : "+ ByteUtils.byteArrayToStringMessage("", ((IQosDataFrame)wlanDecodedFrameList.get(i).getFrame()).getQosControl(), '|'));
 				}		
 			}
 			if (wlanDecodedFrameList.get(i).getFrame() instanceof IWlanControlFrame)
 			{
 				
-				System.out.println("Wlan control frame");
+				logger.debug("Wlan control frame");
 				
 				if (wlanDecodedFrameList.get(i).getFrame() instanceof IackFrame)
 				{
 					IackFrame ackFrame =(IackFrame) wlanDecodedFrameList.get(i).getFrame();
-					System.out.println(tab+"CONTROL FRAME - ACK PACKET");
-					System.out.println(tab+tab+"duration id  : "+ ByteUtils.byteArrayToStringMessage("", ackFrame.getDurationId(), '|'));
-					System.out.println(tab+tab+"receiverAddr : "+ ByteUtils.byteArrayToStringMessage("", ackFrame.getReceiverAddr(),'|'));
+					logger.debug("    CONTROL FRAME - ACK PACKET");
+					logger.debug("        duration id  : "+ ByteUtils.byteArrayToStringMessage("", ackFrame.getDurationId(), '|'));
+					logger.debug("        receiverAddr : "+ ByteUtils.byteArrayToStringMessage("", ackFrame.getReceiverAddr(),'|'));
 				}
 				else if (wlanDecodedFrameList.get(i).getFrame() instanceof IClearToSendFrame)
 				{
 					IClearToSendFrame cts =(IClearToSendFrame) wlanDecodedFrameList.get(i).getFrame();
-					System.out.println(tab+"CONTROL FRAME - CLEAR TO SEND PACKET");
-					System.out.println(tab+tab+"duration id  : "+ ByteUtils.byteArrayToStringMessage("", cts.getDurationId(), '|'));
-					System.out.println(tab+tab+"receiverAddr : "+ ByteUtils.byteArrayToStringMessage("", cts.getReceiverAddr(),'|'));
+					logger.debug("    CONTROL FRAME - CLEAR TO SEND PACKET");
+					logger.debug("        duration id  : "+ ByteUtils.byteArrayToStringMessage("", cts.getDurationId(), '|'));
+					logger.debug("        receiverAddr : "+ ByteUtils.byteArrayToStringMessage("", cts.getReceiverAddr(),'|'));
 				}
 				else if (wlanDecodedFrameList.get(i).getFrame() instanceof IContentionFreeFrame)
 				{
 					IContentionFreeFrame contentionFr =(IContentionFreeFrame) wlanDecodedFrameList.get(i).getFrame();
-					System.out.println(tab+"CONTROL FRAME - CONTENTION FREE PACKET");
-					System.out.println(tab+tab+ "duration id : "+ ByteUtils.byteArrayToStringMessage("", contentionFr.getDurationId(), '|'));
-					System.out.println(tab+tab+"receiverAddr : "+ ByteUtils.byteArrayToStringMessage("", contentionFr.getReceiverAddr(),'|'));
-					System.out.println(tab+tab+"bss id       : "+ ByteUtils.byteArrayToStringMessage("", contentionFr.getBssid(), '|'));
+					logger.debug("    CONTROL FRAME - CONTENTION FREE PACKET");
+					logger.debug("        duration id : "+ ByteUtils.byteArrayToStringMessage("", contentionFr.getDurationId(), '|'));
+					logger.debug("        receiverAddr : "+ ByteUtils.byteArrayToStringMessage("", contentionFr.getReceiverAddr(),'|'));
+					logger.debug("        bss id       : "+ ByteUtils.byteArrayToStringMessage("", contentionFr.getBssid(), '|'));
 				}
 				else if (wlanDecodedFrameList.get(i).getFrame() instanceof IContentionFreeReceiveAckFrame)
 				{
 					IContentionFreeReceiveAckFrame contentionFr =(IContentionFreeReceiveAckFrame) wlanDecodedFrameList.get(i).getFrame();
 					
-					System.out.println(tab+"CONTROL FRAME - CONTENTION FREE AND RECEIVE ACK PACKET");
-					System.out.println(tab+tab+"duration id  : "+ ByteUtils.byteArrayToStringMessage("", contentionFr.getDurationId(), '|'));
-					System.out.println(tab+tab+"receiverAddr : "+ ByteUtils.byteArrayToStringMessage("", contentionFr.getReceiverAddr(),'|'));
-					System.out.println(tab+tab+"bss id       : "+ ByteUtils.byteArrayToStringMessage("", contentionFr.getBssid(), '|'));
+					logger.debug("    CONTROL FRAME - CONTENTION FREE AND RECEIVE ACK PACKET");
+					logger.debug("        duration id  : "+ ByteUtils.byteArrayToStringMessage("", contentionFr.getDurationId(), '|'));
+					logger.debug("        receiverAddr : "+ ByteUtils.byteArrayToStringMessage("", contentionFr.getReceiverAddr(),'|'));
+					logger.debug("        bss id       : "+ ByteUtils.byteArrayToStringMessage("", contentionFr.getBssid(), '|'));
 				}
 				else if (wlanDecodedFrameList.get(i).getFrame() instanceof IPowerSavePollingFrame)
 				{
 					IPowerSavePollingFrame powerSave =(IPowerSavePollingFrame) wlanDecodedFrameList.get(i).getFrame();
 					
-					System.out.println(tab+"CONTROL FRAME - POWER SAVE POLLING PACKET");
-					System.out.println(tab+tab+"association id : "+ ByteUtils.byteArrayToStringMessage("", powerSave.getAssociationId(),'|'));
-					System.out.println(tab+tab+"bss id         : "+ ByteUtils.byteArrayToStringMessage("", powerSave.getBssid(), '|'));
-					System.out.println(tab+tab+"transmitter id : "+ ByteUtils.byteArrayToStringMessage("", powerSave.getTransmitterId(),'|'));
+					logger.debug("    CONTROL FRAME - POWER SAVE POLLING PACKET");
+					logger.debug("        association id : "+ ByteUtils.byteArrayToStringMessage("", powerSave.getAssociationId(),'|'));
+					logger.debug("        bss id         : "+ ByteUtils.byteArrayToStringMessage("", powerSave.getBssid(), '|'));
+					logger.debug("        transmitter id : "+ ByteUtils.byteArrayToStringMessage("", powerSave.getTransmitterId(),'|'));
 				}
 				else if (wlanDecodedFrameList.get(i).getFrame() instanceof IRequestToSendFrame)
 				{
 					IRequestToSendFrame rts =(IRequestToSendFrame) wlanDecodedFrameList.get(i).getFrame();
 					
-					System.out.println(tab+"CONTROL FRAME - REQUEST TO SEND PACKET");
-					System.out.println(tab+tab+"duration id     : "+ ByteUtils.byteArrayToStringMessage("", rts.getDurationId(), '|'));
-					System.out.println(tab+tab+"receiverAddr    : "+ ByteUtils.byteArrayToStringMessage("", rts.getReceiverAddr(),'|'));
-					System.out.println(tab+tab+"transmitterAddr : "+ ByteUtils.byteArrayToStringMessage("",rts.getTransmitterAddr(), '|'));
+					logger.debug("    CONTROL FRAME - REQUEST TO SEND PACKET");
+					logger.debug("        duration id     : "+ ByteUtils.byteArrayToStringMessage("", rts.getDurationId(), '|'));
+					logger.debug("        receiverAddr    : "+ ByteUtils.byteArrayToStringMessage("", rts.getReceiverAddr(),'|'));
+					logger.debug("        transmitterAddr : "+ ByteUtils.byteArrayToStringMessage("",rts.getTransmitterAddr(), '|'));
 				}
 			}
 			
@@ -289,21 +291,21 @@ public class DisplayDecodingInfo {
 	 */
 	public static void displayTaggedParameter(IWlanElement elementList)
 	{
-		System.out.println(tab+tab+tab + "Dynamic Elements");
-		System.out.println(tab+tab+tab + "element id : "+ (elementList.getElementId() & 0xFF));
+		logger.debug("            Dynamic Elements");
+		logger.debug("            element id : "+ (elementList.getElementId() & 0xFF));
 		
 		if (elementList instanceof IDsssParameterSetElement)
 		{
 			IDsssParameterSetElement element = (IDsssParameterSetElement)elementList;
-			System.out.println(tab+tab+tab+tab+"currentChannel : "+ element.getCurrentChannel());
-			System.out.println(tab+tab+tab+tab+"frequency      : " + element.getFrequency());
+			logger.debug("                currentChannel : "+ element.getCurrentChannel());
+			logger.debug("                frequency      : " + element.getFrequency());
 		}
 		else if (elementList instanceof IErpElement)
 		{
 			IErpElement element = (IErpElement)elementList;
-			System.out.println(tab+tab+tab+tab+"isErpPresent         : " + element.isErpPresent());
-			System.out.println(tab+tab+tab+tab+"useProtection        : " + element.useProtection());
-			System.out.println(tab+tab+tab+tab+"isBarkerPreambleMode : " + element.isBarkerPreambleMode());
+			logger.debug("                isErpPresent         : " + element.isErpPresent());
+			logger.debug("                useProtection        : " + element.useProtection());
+			logger.debug("                isBarkerPreambleMode : " + element.isBarkerPreambleMode());
 		}
 		else if (elementList instanceof IExtendedSupportedRateElement)
 		{
@@ -312,30 +314,30 @@ public class DisplayDecodingInfo {
 			for (int i = 0; i < element.getDataRate().length; i++) {
 				dataRateStr += ((element.getDataRate()[i] & 0x7F) * 500) + "kbps,";
 			}
-			System.out.println(tab+tab+tab+tab+"extended data rates supported : " + dataRateStr);
+			logger.debug("                extended data rates supported : " + dataRateStr);
 		}
 		else if (elementList instanceof IHtCapabilitiesElement)
 		{
 			IHtCapabilitiesElement element = (IHtCapabilitiesElement)elementList;
-			System.out.println(tab+tab+tab+tab+"support short 20Mhz           : "+ element.getHtCapabilityInfo().isSupportShortGi20Mhz());
-			System.out.println(tab+tab+tab+tab+"support short 40Mhz           : "+ element.getHtCapabilityInfo().isSupportShortGi40Mhz());
+			logger.debug("                support short 20Mhz           : "+ element.getHtCapabilityInfo().isSupportShortGi20Mhz());
+			logger.debug("                support short 40Mhz           : "+ element.getHtCapabilityInfo().isSupportShortGi40Mhz());
 
-			System.out.println(tab+tab+tab+tab+"channel width 20MHz supported : "+ !element.getHtCapabilityInfo().isSupportedChannelWidthSet());
-			System.out.println(tab+tab+tab+tab+"channel width 40MHz supported : "+ element.getHtCapabilityInfo().isSupportedChannelWidthSet());
+			logger.debug("                channel width 20MHz supported : "+ !element.getHtCapabilityInfo().isSupportedChannelWidthSet());
+			logger.debug("                channel width 40MHz supported : "+ element.getHtCapabilityInfo().isSupportedChannelWidthSet());
 			
-			System.out.println(tab+tab+tab+tab+"AMPDU paramters               : "	+ (element.getAmpduParameters() & 0xFF));
+			logger.debug("                AMPDU paramters               : "	+ (element.getAmpduParameters() & 0xFF));
 			
 			for (int i = 0; i < element.getSupportedMCSSet().getMcsList().size(); i++) {
-				System.out.println(tab+tab+tab+tab+"MCS Supported : n°"+ element.getSupportedMCSSet().getMcsList().get(i).getMcsIndex() + "-"+ element.getSupportedMCSSet().getMcsList().get(i).getModulation());
+				logger.debug("                MCS Supported : n°"+ element.getSupportedMCSSet().getMcsList().get(i).getMcsIndex() + "-"+ element.getSupportedMCSSet().getMcsList().get(i).getModulation());
 			}
 			
-			System.out.println(tab+tab+tab+tab+"HT Extended capabilities           : "+ ByteUtils.byteArrayToStringMessage("",element.getHtExtendedCapabilities(), '|'));
-			System.out.println(tab+tab+tab+tab+"Transmit beam forming capabilities : "+ ByteUtils.byteArrayToStringMessage("",element.getTransmitBeamformingCapabilities(), '|'));
-			System.out.println(tab+tab+tab+tab+"ASEL capabilities                  : "+ (element.getAselCapabilities() & 0xFF));
+			logger.debug("                HT Extended capabilities           : "+ ByteUtils.byteArrayToStringMessage("",element.getHtExtendedCapabilities(), '|'));
+			logger.debug("                Transmit beam forming capabilities : "+ ByteUtils.byteArrayToStringMessage("",element.getTransmitBeamformingCapabilities(), '|'));
+			logger.debug("                ASEL capabilities                  : "+ (element.getAselCapabilities() & 0xFF));
 		}
 		else if (elementList instanceof ISsidElement)
 		{
-			System.out.println(tab+tab+tab+tab+"SSID : " +((ISsidElement)elementList).getSsid());
+			logger.debug("                SSID : " +((ISsidElement)elementList).getSsid());
 		}
 		else if (elementList instanceof ISupportedRateElement)
 		{
@@ -346,15 +348,15 @@ public class DisplayDecodingInfo {
 				dataRateStr += ((element.getDataRate()[i] & 0x7F) * 500) + "kbps,";
 			}
 			
-			System.out.println(tab+tab+tab+tab+"data rates supported : "+ dataRateStr);
+			logger.debug("                data rates supported : "+ dataRateStr);
 		}
 		else if (elementList instanceof ITimElement)
 		{
 			ITimElement element = (ITimElement)elementList;
-			System.out.println(tab+tab+tab+tab+"number of beacon frame before next DTIM  : "+ (element.getDTIMcount() & 0xFF));
-			System.out.println(tab+tab+tab+tab+"number of beacon interval between 2 DTIM : "+ (element.getDTIMperiod() & 0XFF));
-			System.out.println(tab+tab+tab+tab+"TIM bitmapControl                        : "+ (element.getBitmapControl() & 0XFF));
-			System.out.println(ByteUtils.byteArrayToStringMessage(tab+tab+tab+tab+"TIM partialVirtualBitmap", element.getPartialVirtualBitmap(), '|'));;
+			logger.debug("                number of beacon frame before next DTIM  : "+ (element.getDTIMcount() & 0xFF));
+			logger.debug("                number of beacon interval between 2 DTIM : "+ (element.getDTIMperiod() & 0XFF));
+			logger.debug("                TIM bitmapControl                        : "+ (element.getBitmapControl() & 0XFF));
+			logger.debug(ByteUtils.byteArrayToStringMessage("                TIM partialVirtualBitmap", element.getPartialVirtualBitmap(), '|'));;
 		}
 	}
 	

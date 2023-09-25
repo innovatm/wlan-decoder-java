@@ -17,7 +17,7 @@ import fr.bmartel.protocol.wlan.frame.management.element.inter.IDsssParameterSet
  */
 public class DsssParameterSetElement extends WlanElementAbstr implements IDsssParameterSetElement {
 
-	public final static int id = 3;
+	public static final int id = 3;
 
 	/**
 	 * current channel
@@ -27,8 +27,7 @@ public class DsssParameterSetElement extends WlanElementAbstr implements IDsssPa
 	private int frequency = -1;
 
 	/**
-	 * 
-	 * @param length
+	 *
 	 * @param data
 	 */
 	public DsssParameterSetElement(byte[] data) {

@@ -29,6 +29,9 @@ import fr.bmartel.protocol.wlan.frame.IWlanFrame;
 import fr.bmartel.protocol.wlan.inter.IWlan802dot11Radiotap;
 import fr.bmartel.protocol.wlan.inter.IWlanFrameControl;
 import fr.bmartel.utils.RadioTapException;
+import fr.bmartel.wlandecoder.DisplayDecodingInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Wlan decoder
@@ -38,7 +41,9 @@ import fr.bmartel.utils.RadioTapException;
  */
 public class WlanDecoder implements IWlan802dot11Radiotap {
 
-	public final static boolean DISPLAY_ELEMENT_NOT_DECODED = true;
+	private static final Logger logger = LoggerFactory.getLogger(WlanDecoder.class);
+
+   public static final boolean DISPLAY_ELEMENT_NOT_DECODED = true;
 	
 	/**
 	 * radio tap object
@@ -99,7 +104,7 @@ public class WlanDecoder implements IWlan802dot11Radiotap {
 			System.arraycopy(frame, offset, frameWlan, 0, frame.length - offset);
 			wlan802dot11 = new WlanFrameDecoder(frameWlan);
 		} else {
-			System.err.println("An error occured while decoding wlan frame");
+			logger.error("An error occurred while decoding wlan frame");
 		}
 	}
 

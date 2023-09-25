@@ -3,6 +3,9 @@ package fr.bmartel.protocol.wlan.frame.control;
 import fr.bmartel.protocol.wlan.frame.IWlanFrame;
 import fr.bmartel.protocol.wlan.frame.control.inter.IRequestToSendFrame;
 import fr.bmartel.protocol.wlan.inter.IWlanControlFrame;
+import fr.bmartel.wlandecoder.DisplayDecodingInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Control Frame : request to Send<br/>
@@ -16,6 +19,8 @@ import fr.bmartel.protocol.wlan.inter.IWlanControlFrame;
  * 
  */
 public class RequestToSendFrame implements IWlanFrame,IWlanControlFrame,IRequestToSendFrame {
+
+	private static final Logger logger = LoggerFactory.getLogger(RequestToSendFrame.class);
 
 	/**
 	 * duration id value on 2 bytes
@@ -46,7 +51,7 @@ public class RequestToSendFrame implements IWlanFrame,IWlanControlFrame,IRequest
 			transmitterAddr = new byte[] { frame[8], frame[9], frame[10],
 					frame[11], frame[12], frame[13] };
 		} else {
-			System.err.println("error treating Control frame - request to send frame");
+			logger.error("error treating Control frame - request to send frame");
 		}
 	}
 

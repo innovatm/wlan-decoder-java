@@ -6,6 +6,9 @@ import fr.bmartel.protocol.wlan.frame.management.element.subelement.HtCapability
 import fr.bmartel.protocol.wlan.frame.management.element.subelement.McsSupportedSet;
 import fr.bmartel.protocol.wlan.frame.management.element.subelement.inter.IHtCapabilityInformation;
 import fr.bmartel.protocol.wlan.frame.management.element.subelement.inter.IMcsSupportedSet;
+import fr.bmartel.wlandecoder.DisplayDecodingInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Define high throughput capabilities element
@@ -25,7 +28,9 @@ import fr.bmartel.protocol.wlan.frame.management.element.subelement.inter.IMcsSu
  */
 public class HTCapabilitiesElement extends WlanElementAbstr implements IHtCapabilitiesElement {
 
-	public final static int id = 45;
+	private static final Logger logger = LoggerFactory.getLogger(HTCapabilitiesElement.class);
+
+	public static final int id = 45;
 	
 	private IHtCapabilityInformation htCapabilityInfo = null;
 
@@ -59,7 +64,7 @@ public class HTCapabilitiesElement extends WlanElementAbstr implements IHtCapabi
 					data[23], data[24] };
 			aselCapabilities = data[25];
 		} else {
-			System.err.println("Error decoding HT capabilities element");
+			logger.error("Error decoding HT capabilities element");
 		}
 	}
 

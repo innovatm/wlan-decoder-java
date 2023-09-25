@@ -8,7 +8,7 @@ package fr.bmartel.protocol.wlan.constant;
  */
 public class GuardIntervalConst {
 
-	public final static int GUARD_INTERVAL_400NS = 400;
+	public static final int GUARD_INTERVAL_400NS = 400;
 
-	public final static int GUARD_INTERVAL_800NS = 800;
+	public static final int GUARD_INTERVAL_800NS = 800;
 }

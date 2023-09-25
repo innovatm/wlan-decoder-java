@@ -23,7 +23,7 @@ import fr.bmartel.protocol.wlan.frame.management.element.inter.ITimElement;
  */
 public class TimElement extends WlanElementAbstr implements ITimElement{
 
-	public final static int id = 5;
+	public static final int id = 5;
 	
 	/**
 	 * number of beacon frame will appear before the next DTIM
@@ -41,7 +41,6 @@ public class TimElement extends WlanElementAbstr implements ITimElement{
 	
 	/**
 	 * 
-	 * @param length
 	 * @param data
 	 */
 	public TimElement(byte[] data) {

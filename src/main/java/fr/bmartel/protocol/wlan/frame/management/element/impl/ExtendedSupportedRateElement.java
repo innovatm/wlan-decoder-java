@@ -2,6 +2,9 @@ package fr.bmartel.protocol.wlan.frame.management.element.impl;
 
 import fr.bmartel.protocol.wlan.frame.management.element.WlanElementAbstr;
 import fr.bmartel.protocol.wlan.frame.management.element.inter.IExtendedSupportedRateElement;
+import fr.bmartel.wlandecoder.DisplayDecodingInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Extended supported data rate for wlan 802.11 element id
@@ -16,7 +19,9 @@ import fr.bmartel.protocol.wlan.frame.management.element.inter.IExtendedSupporte
  */
 public class ExtendedSupportedRateElement extends WlanElementAbstr implements IExtendedSupportedRateElement{
 
-	public final static int id = 50;
+	private static final Logger logger = LoggerFactory.getLogger(ExtendedSupportedRateElement.class);
+
+	public static final int id = 50;
 
 	private byte[] dataRate = null;
 
@@ -32,7 +37,7 @@ public class ExtendedSupportedRateElement extends WlanElementAbstr implements IE
 	 */
 	public int getMaxRate() {
 		if (dataRate.length > 0) {
-			System.out.println((dataRate[dataRate.length - 1] & 0x7F) * 500);
+			logger.debug(String.valueOf((dataRate[dataRate.length - 1] & 0x7F) * 500));
 			return ((dataRate[dataRate.length - 1] & 0x7F) * 500) / 1000;
 		} else {
 			return -1;

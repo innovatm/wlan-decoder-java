@@ -24,7 +24,7 @@ import fr.bmartel.protocol.wlan.frame.management.element.inter.IErpElement;
  */
 public class ErpElement extends WlanElementAbstr implements IErpElement{
 
-	public final static int id = 42;
+	public static final int id = 42;
 	
 	private boolean erpPresent = false;
 	

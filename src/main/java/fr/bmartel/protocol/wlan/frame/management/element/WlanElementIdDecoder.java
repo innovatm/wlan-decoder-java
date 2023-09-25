@@ -11,6 +11,9 @@ import fr.bmartel.protocol.wlan.frame.management.element.impl.HTCapabilitiesElem
 import fr.bmartel.protocol.wlan.frame.management.element.impl.SSIDElement;
 import fr.bmartel.protocol.wlan.frame.management.element.impl.SupportedRateElement;
 import fr.bmartel.protocol.wlan.frame.management.element.impl.TimElement;
+import fr.bmartel.wlandecoder.DisplayDecodingInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Decode Wlan 802.11 element id
@@ -19,6 +22,8 @@ import fr.bmartel.protocol.wlan.frame.management.element.impl.TimElement;
  * 
  */
 public class WlanElementIdDecoder {
+
+	private static final Logger logger = LoggerFactory.getLogger(WlanElementIdDecoder.class);
 
 	public WlanElementIdDecoder() {
 	}
@@ -80,7 +85,7 @@ public class WlanElementIdDecoder {
 				}
 				if (!done && WlanDecoder.DISPLAY_ELEMENT_NOT_DECODED)
 				{
-					System.out.println("Element id not decoded => " + (elementId & 0XFF));
+					logger.trace("Element id not decoded => " + (elementId & 0XFF));
 				}
 				if (element != null) {
 					listOfElements.add(element);

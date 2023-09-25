@@ -34,6 +34,8 @@ import fr.bmartel.pcapdecoder.structure.types.inter.IEnhancedPacketBLock;
 import fr.bmartel.pcapdecoder.utils.DecoderStatus;
 import fr.bmartel.protocol.wlan.WlanDecoder;
 import fr.bmartel.protocol.wlan.inter.IWlan802dot11Radiotap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @mainpage  WLAN 802.11 JAVA DECODER
@@ -65,6 +67,8 @@ import fr.bmartel.protocol.wlan.inter.IWlan802dot11Radiotap;
  */
 public class DecodeMain {
 
+	private static final Logger logger = LoggerFactory.getLogger(DecodeMain.class);
+
 	/**
 	 * Start WLAN decoder
 	 * 
@@ -92,15 +96,15 @@ public class DecodeMain {
 					if (args[1].equals("-f"))
 						dataFromFile = readFile(args[2]);
 					else {
-						System.err.println("Insufficient argument");
+						logger.error("Insufficient argument");
 						return;
 					}
 				} else {
-					System.err.println("Insufficient argument");
+					logger.error("Insufficient argument");
 					return;
 				}
 			} else {
-				System.err.println("Invalid argument");
+				logger.error("Invalid argument");
 				return;
 			}
 			if (dataFromFile.length > 0) {
@@ -124,19 +128,19 @@ public class DecodeMain {
 					long endTime   = System.currentTimeMillis();
 					long totalTime = endTime - startTime;
 					
-					System.out.println("decoding time : " + totalTime + " ms");
+					logger.debug("decoding time : " + totalTime + " ms");
 					
 					if (verbose)
 						DisplayDecodingInfo.displayAllInfo(wlanDecodedFrameList);
 				}
 				else
-					System.err.println("Decoding error occured");
+					logger.error("Decoding error occured");
 			}
 			else
-				System.err.println("File is empty");
+				logger.error("File is empty");
 		}
 		else
-			System.err.println("Insufficient argument");
+			logger.error("Insufficient argument");
 	}
 
 	/**
@@ -153,7 +157,7 @@ public class DecodeMain {
 		try {
 			data = Files.readAllBytes(path2);
 		} catch (IOException e) {
-			System.err.print("Error file path is incorrect");
+			logger.error("Error file path is incorrect");
 		}
 
 		return data;

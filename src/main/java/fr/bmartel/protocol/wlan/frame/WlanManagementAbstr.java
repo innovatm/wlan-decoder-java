@@ -1,6 +1,10 @@
 package fr.bmartel.protocol.wlan.frame;
 
 
+import fr.bmartel.wlandecoder.DisplayDecodingInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Basic management frame<br/>
  * <ul>
@@ -17,6 +21,8 @@ package fr.bmartel.protocol.wlan.frame;
  */
 public abstract class WlanManagementAbstr implements IWlanManagementFrame,
 		IWlanFrame {
+
+	private static final Logger logger = LoggerFactory.getLogger(WlanManagementAbstr.class);
 
 	/**
 	 * duration id value
@@ -78,7 +84,7 @@ public abstract class WlanManagementAbstr implements IWlanManagementFrame,
 				fcs=new byte[]{ frame[frame.length-4], frame[frame.length-3],  frame[frame.length-2], frame[frame.length-1]};
 			}
 		} else {
-			System.err.println("error treating Management frame");
+			logger.error("error treating Management frame");
 		}
 	}
 

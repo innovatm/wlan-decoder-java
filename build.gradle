@@ -16,5 +16,5 @@ repositories {
 
 dependencies {
     implementation 'org.slf4j:slf4j-api:2.0.5'
-    implementation files('radiotapdecoder-1.0.jar')
+    implementation files('./libs/radiotapdecoder-1.0.jar')
 }

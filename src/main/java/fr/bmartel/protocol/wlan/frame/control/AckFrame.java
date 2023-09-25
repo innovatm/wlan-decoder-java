@@ -3,6 +3,9 @@ package fr.bmartel.protocol.wlan.frame.control;
 import fr.bmartel.protocol.wlan.frame.IWlanFrame;
 import fr.bmartel.protocol.wlan.frame.control.inter.IackFrame;
 import fr.bmartel.protocol.wlan.inter.IWlanControlFrame;
+import fr.bmartel.wlandecoder.DisplayDecodingInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Control frame - ACK <br/>
@@ -15,6 +18,8 @@ import fr.bmartel.protocol.wlan.inter.IWlanControlFrame;
  * 
  */
 public class AckFrame implements IWlanFrame,IWlanControlFrame,IackFrame {
+
+	private static final Logger logger = LoggerFactory.getLogger(AckFrame.class);
 
 	/**
 	 * duration id
@@ -38,7 +43,7 @@ public class AckFrame implements IWlanFrame,IWlanControlFrame,IackFrame {
 			receiverAddr = new byte[] { frame[2], frame[3], frame[4], frame[5],
 					frame[6], frame[7] };
 		} else {
-			System.err.println("error treating Control frame - clear to send frame");
+			logger.error("error treating Control frame - clear to send frame");
 		}
 	}
 

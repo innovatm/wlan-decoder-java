@@ -24,7 +24,7 @@ import fr.bmartel.protocol.wlan.frame.management.element.inter.ISsidElement;
  */
 public class SSIDElement extends WlanElementAbstr implements ISsidElement{
 
-	public final static int id = 0;
+	public static final int id = 0;
 
 	/**
 	 * ssid value
@@ -34,7 +34,6 @@ public class SSIDElement extends WlanElementAbstr implements ISsidElement{
 	/**
 	 * Build SSID object
 	 * 
-	 * @param length
 	 * @param data
 	 */
 	public SSIDElement(byte[] data) {

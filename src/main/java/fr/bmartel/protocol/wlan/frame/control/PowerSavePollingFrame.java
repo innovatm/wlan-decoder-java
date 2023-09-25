@@ -3,6 +3,9 @@ package fr.bmartel.protocol.wlan.frame.control;
 import fr.bmartel.protocol.wlan.frame.IWlanFrame;
 import fr.bmartel.protocol.wlan.frame.control.inter.IPowerSavePollingFrame;
 import fr.bmartel.protocol.wlan.inter.IWlanControlFrame;
+import fr.bmartel.wlandecoder.DisplayDecodingInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Power saving frame - Control Frame<br/>
@@ -17,6 +20,8 @@ import fr.bmartel.protocol.wlan.inter.IWlanControlFrame;
  */
 public class PowerSavePollingFrame implements IWlanControlFrame, IWlanFrame,
 		IPowerSavePollingFrame {
+
+	private static final Logger logger = LoggerFactory.getLogger(PowerSavePollingFrame.class);
 	private byte[] associationId = null;
 
 	private byte[] bssid = null;
@@ -40,8 +45,7 @@ public class PowerSavePollingFrame implements IWlanControlFrame, IWlanFrame,
 			transmitterId = new byte[] { frame[8], frame[9], frame[10],
 					frame[11], frame[12], frame[13] };
 		} else {
-			System.err
-					.println("error treating Control frame - power saving frame");
+			logger.error("error treating Control frame - power saving frame");
 		}
 	}
 

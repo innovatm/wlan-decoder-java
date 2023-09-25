@@ -8,13 +8,13 @@ package fr.bmartel.protocol.wlan.constant;
  */
 public class WifiTypes {
 
-	public final static String IEEE80211_CHAN_A = "802.11a";
+	public static final String IEEE80211_CHAN_A = "802.11a";
 
-	public final static String IEEE80211_CHAN_B = "802.11b";
+	public static final String IEEE80211_CHAN_B = "802.11b";
 
-	public final static String IEEE80211_CHAN_PUREG = "802.11g-pure";
+	public static final String IEEE80211_CHAN_PUREG = "802.11g-pure";
 
-	public final static String IEEE80211_CHAN_G = "802.11g";
+	public static final String IEEE80211_CHAN_G = "802.11g";
 
-	public final static String IEEE80211_CHAN_N = "802.11n";
+	public static final String IEEE80211_CHAN_N = "802.11n";
 }

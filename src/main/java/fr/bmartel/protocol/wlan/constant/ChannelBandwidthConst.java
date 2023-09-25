@@ -8,7 +8,7 @@ package fr.bmartel.protocol.wlan.constant;
  */
 public class ChannelBandwidthConst {
 
-	public final static int CHANNEL_BANDWIDTH_20MHZ = 20;
+	public static final int CHANNEL_BANDWIDTH_20MHZ = 20;
 
-	public final static int CHANNEL_BANDWIDTH_40MHZ = 40;
+	public static final int CHANNEL_BANDWIDTH_40MHZ = 40;
 }

@@ -24,6 +24,10 @@
 package fr.bmartel.protocol.wlan.frame;
 
 
+import fr.bmartel.wlandecoder.DisplayDecodingInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Define default implementation for all wlan 802.11 data frame including
  * qos/data/NULL<br/>
@@ -41,6 +45,8 @@ package fr.bmartel.protocol.wlan.frame;
  * 
  */
 public abstract class WlanDataAbstr implements IWlanDataFrame, IWlanFrame {
+
+	private static final Logger logger = LoggerFactory.getLogger(WlanDataAbstr.class);
 
 	/**
 	 * duration id value
@@ -161,7 +167,7 @@ public abstract class WlanDataAbstr implements IWlanDataFrame, IWlanFrame {
 			}
 
 		} else {
-			System.err.println("error treating Data frame");
+			logger.error("error treating Data frame");
 		}
 	}
 

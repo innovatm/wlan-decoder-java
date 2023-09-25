@@ -3,6 +3,9 @@ package fr.bmartel.protocol.wlan.frame.control;
 import fr.bmartel.protocol.wlan.frame.IWlanFrame;
 import fr.bmartel.protocol.wlan.frame.control.inter.IContentionFreeReceiveAckFrame;
 import fr.bmartel.protocol.wlan.inter.IWlanControlFrame;
+import fr.bmartel.wlandecoder.DisplayDecodingInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Control Frame : Contention free and Receive ACK<br/>
@@ -16,6 +19,8 @@ import fr.bmartel.protocol.wlan.inter.IWlanControlFrame;
  * 
  */
 public class ContentionFreeReceiveAckFrame implements IWlanFrame,IWlanControlFrame,IContentionFreeReceiveAckFrame {
+
+	private static final Logger logger = LoggerFactory.getLogger(ContentionFreeReceiveAckFrame.class);
 	/**
 	 * duration id value on 2 bytes
 	 */
@@ -45,7 +50,7 @@ public class ContentionFreeReceiveAckFrame implements IWlanFrame,IWlanControlFra
 			bssid = new byte[] { frame[8], frame[9], frame[10], frame[11],
 					frame[12], frame[13] };
 		} else {
-			System.err.println("error treating Control frame - Contention free frame");
+			logger.error("error treating Control frame - Contention free frame");
 		}
 	}
 

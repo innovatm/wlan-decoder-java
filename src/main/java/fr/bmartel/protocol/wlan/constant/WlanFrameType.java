@@ -8,9 +8,9 @@ package fr.bmartel.protocol.wlan.constant;
  */
 public class WlanFrameType {
 
-	public final static byte MANAGEMENT_FRAME_TYPE = 0x00;
+	public static final byte MANAGEMENT_FRAME_TYPE = 0x00;
 
-	public final static byte CONTROL_FRAME_TYPE = 0x01;
+	public static final byte CONTROL_FRAME_TYPE = 0x01;
 
-	public final static byte DATA_FRAME_TYPE = 0x02;
+	public static final byte DATA_FRAME_TYPE = 0x02;
 }

@@ -14,7 +14,7 @@ import fr.bmartel.protocol.wlan.WlanMcs;
  */
 public class WlanMcsList {
 
-	public final static int SPATIAL_STREAM_NUM = 4;
+	public static final int SPATIAL_STREAM_NUM = 4;
 
 	/**
 	 * define list of MCS index with coding scheme and modulation
