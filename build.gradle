@@ -1,9 +1,7 @@
 plugins {
     id 'java'
-    id 'application'
     id 'eclipse'
     id 'idea'
-    id 'org.graalvm.buildtools.native' version '0.9.26'
 }
 
 group 'fr.bmartel'
@@ -15,6 +13,20 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.slf4j:slf4j-api:2.0.5'
+    implementation 'org.slf4j:slf4j-api:1.7.36'
     implementation files('./libs/radiotapdecoder-1.0.jar')
+}
+
+jar {
+    baseName 'wlandecoder'
+    manifest {
+        attributes(
+                'Main-Class': 'fr.bmartel.wlandecoder.DecodeMain',
+                'Manifest-Version': '1.1'
+        )
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
 }
